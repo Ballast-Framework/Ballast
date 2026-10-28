@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+message: "If you use Ballast, please cite it as below."
+type: dataset
+title: "Ballast AI Security Framework"
+version: "1.0.0"
+abstract: >-
+  The Ballast AI Security Framework is an open, vendor-neutral security
+  control framework for enterprises that build, buy and use AI, covering
+  copilots and assistants,
+  autonomous agents, AI coding assistants, AI features embedded in SaaS, and
+  externally sourced models. Version 1.0.0, the first public release, defines
+  128 controls in eight domains, applied by capability tags, tiered by asset
+  risk rating and autonomy level, and mapped to the OWASP Top 10 lists for
+  LLM and agentic applications, MITRE ATLAS, NIST AI RMF and ISO/IEC 42001.
+authors:
+  - family-names: Hira
+    given-names: Raoul
+  - family-names: Nikum
+    given-names: "Avishkar (Avi)"
+license: CC-BY-4.0
+keywords:
+  - AI security
+  - agentic AI
+  - AI agents
+  - LLM security
+  - prompt injection
+  - MCP
+  - security controls
+  - control framework
+  - AI governance
+date-released: "2026-10-25"
+repository-code: "https://github.com/Ballast-Framework/Ballast"

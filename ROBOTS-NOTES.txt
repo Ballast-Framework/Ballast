@@ -1,0 +1,144 @@
+BALLAST CRAWLER PREFERENCES
+Reviewed: 2026-10-27
+
+What these files do
+-------------------
+robots.txt requests no access from 167 named AI-related crawler tokens.
+Its default rule also requests no access from any unlisted crawler, including
+unknown or newly named AI bots. It explicitly permits 25 conventional-search
+tokens. This is a search allowlist, not an exhaustive list of legitimate bots:
+unlisted search engines, link previews, archival crawlers, and other automated
+clients are denied by the default rule too. Human browsers do not normally
+consult robots.txt, so this file does not itself block human browsing.
+
+The named AI list includes training, AI search/retrieval, user-triggered agents,
+coding agents, and data collectors reported by the upstream project. Inclusion
+is a broad precaution, not independent confirmation of every operator's purpose.
+
+GitHub limitation
+-----------------
+RFC 9309 requires the file at the service's top-level /robots.txt. Storing it at
+github.com/Ballast-Framework/Ballast/blob/main/robots.txt does not make it the
+robots.txt for github.com. Repository owners cannot control GitHub's host-level
+robots policy through a repository file. It does not block the GitHub API,
+raw.githubusercontent.com, archive downloads, clones, forks, or existing copies.
+
+While Ballast remains private, GitHub's permissions govern access. If it becomes
+public, these files alone do not prevent AI systems from reading it. They record
+the maintainers' crawler preferences and supply a configuration for a separately
+hosted site. They do not amend the framework's existing LICENSE.
+
+Deploying on a site you control
+------------------------------
+Serve robots.txt as UTF-8 text/plain with HTTP 200 at the origin's /robots.txt.
+For a site at a subdirectory such as /Ballast/, placing the file at
+/Ballast/robots.txt is insufficient. Configure the host-root file instead.
+Review the scope first: this configuration covers the entire host, not just a
+Ballast subdirectory. Do not replace another site's policy without merging it.
+Each distinct origin (scheme, host, and port) needs its own appropriate policy.
+
+REP is voluntary. Agents may ignore it, impersonate an allowed search crawler,
+or use another browser, API, mirror, or previously collected copy. A deny rule
+does not remove existing index entries or erase training data. Some providers
+document exceptions for user-triggered retrieval. Actual access restrictions
+require controls at a host you administer, such as authentication or server-side
+bot controls; those are not installed by these files.
+
+Search versus AI
+----------------
+Googlebot, bingbot, DuckDuckBot, Applebot, Bravebot, PetalBot, Baiduspider,
+Yandex search crawlers, MojeekBot, Qwantbot, Slurp, and SeznamBot have explicit
+allowances. Dedicated tokens such as Google-Extended, Applebot-Extended,
+DuckAssistBot, OAI-SearchBot, Claude-SearchBot, and PerplexityBot are denied.
+
+Allowing a conventional search crawler cannot guarantee that its index is used
+only for traditional search. For example, Google-Extended and Applebot-Extended
+limit particular AI uses, not every AI feature. Google provides a separate
+Search Console "Search generative AI" control; Bing documents NOARCHIVE metadata
+for Copilot/grounding. These are host/page controls, not robots.txt directives,
+and are not configured here. Brave's documented crawler follows Googlebot
+access rules rather than consistently advertising a separate identity.
+
+Syntax and list choices
+-----------------------
+The active User-agent values use only letters, hyphens, and underscores, plus
+the standalone wildcard, as specified in RFC 9309. Rules use Allow/Disallow.
+There are no nonstandard noai, noimageai, crawl-delay, or User-agent regex rules.
+
+The upstream list contains 200 entries. Case-insensitive duplicates were
+removed. Applebot, Bravebot, and PetalBot were moved from deny to allow to
+preserve their conventional search use. The generic Spider token was omitted
+to avoid broad substring matches against search crawlers such as Baiduspider.
+The nbot token was also omitted to avoid matching permitted msnbot identities
+in first-match parsers. Both omitted identities still fall under default deny.
+
+The following 25 upstream names contain spaces, digits, periods, or slashes
+outside RFC 9309's product-token grammar. They were not converted into invented
+aliases or added as malformed directives. They are covered by default deny
+unless a client chooses an allowed search identity or ignores the protocol:
+  AGI Agent
+  AI2Bot
+  AI2Bot-DeepResearchEval
+  Ai2Bot-Dolma
+  bigsur.ai
+  Brightbot 1.0
+  CartAI Agentic Commerce
+  Channel3Bot
+  ChatGPT Agent
+  Crawl4AI
+  Datenbank Crawler
+  Echobot Bot
+  Grok Bot
+  iaskspider/2.0
+  img2dataset
+  Kangaroo Bot
+  Linguee Bot
+  MistralAI-User/1.0
+  netEstate Imprint Crawler
+  panscient.com
+  Payhawk Invoice Fetching Agent
+  Poseidon Research Crawler
+  quillbot.com
+  Sidetrade indexer bot
+  Terra Cotta
+
+Maintenance
+-----------
+Recheck the upstream list and operator documentation before future publication
+updates. Add verified conventional-search tokens to the allow group when needed.
+Keep AI-specific tokens out of that group; do not add broad identities such as
+Mozilla, Chrome, Safari, Google, or a wildcard Allow rule.
+Test known search, named AI, and unknown agents after edits. Names alone cannot
+authenticate a crawler. Review origin logs when this is deployed on your host.
+
+Sources and attribution
+-----------------------
+RFC 9309:
+https://www.rfc-editor.org/rfc/rfc9309.html
+
+Primary adapted AI list (MIT; notice included in robots.txt):
+https://github.com/ai-robots-txt/ai.robots.txt/tree/3ef52d90329b1c4071be4e0dc5e8f3864df6b69f
+Source robots.txt Git blob: 0268990b2f01aeff65b3f20091ff26d1a384a37c
+
+Additional examples reviewed:
+https://github.com/recklessfx0/block-ai-crawlers
+https://gist.github.com/edmondburnett/8694c18c8fdc38fd81ea23a4fae74a14
+Their examples were compared for coverage. The blanket search exclusion and
+unsupported noai metadata shown in some examples were not adopted.
+
+Operator references:
+https://developers.google.com/crawling/docs/robots-txt/robots-txt-spec
+https://developers.google.com/crawling/docs/crawlers-fetchers/google-common-crawlers
+https://support.google.com/webmasters/answer/16908024?hl=en
+https://support.apple.com/en-us/119829
+https://duckduckgo.com/duckduckgo-help-pages/results/duckassistbot
+https://search.brave.com/help/brave-search-crawler
+https://webmaster.petalsearch.com/site/petalbot
+https://www.mojeek.com/bot.html
+https://help.qwant.com/hc/en-us/articles/51146433634833-The-Qwant-bot-QwantBot-and-the-robots-txt-file
+https://www.yandex.com/support/webmaster/en/robot-workings/user-agent
+https://www.baidu.com/search/robots_english.html
+https://www.bing.com/webmasters/help/bing-webmaster-guidelines-30fba23a
+https://developers.openai.com/api/docs/bots
+https://docs.perplexity.ai/docs/resources/perplexity-crawlers
+https://support.claude.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler
